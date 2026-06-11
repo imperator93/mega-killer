@@ -1,0 +1,9 @@
+.sidebar-main {
+    width: 20%;
+    height: 100%;
+    position: relative;
+    left: 80%;
+    background-color: red;
+    overflow: hidden;
+    cursor: pointer;
+}
