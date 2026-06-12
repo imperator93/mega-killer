@@ -1,7 +1,8 @@
 .crosshair {
-    position: absolute;
     width: 100px;
     height: 100px;
+    position: absolute;
     background: url("https://imgur.com/0fgS7oB.png");
     background-size: 100%;
+    z-index: 100;
 }
