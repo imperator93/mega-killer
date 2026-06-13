@@ -1,10 +1,13 @@
-import type { Player } from "./Player";
-
-export class Upgrade {
-  static upgradeDamage: (player: Player) => void = (player) => {
-    player.damage += 10;
-  };
-  static upgradeAttackSpeed: (player: Player) => void = (player) => {
-    player.attackSpeed += 10;
-  };
-}
+export type Upgrade = {
+  id: "as-upgrade" | "dmg-upgrade";
+  cost: number;
+  costIncrement: number;
+  level: number;
+  name: string;
+  description: string;
+  isResearching: boolean;
+  researchLength: number;
+  researchLengthIncrement: number;
+  timeToComplete: number;
+  backgroundPic: string;
+};
