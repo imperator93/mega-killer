@@ -17,7 +17,7 @@ const initialState: Record<Upgrade["id"], Upgrade> = {
   },
   "dmg-upgrade": {
     id: "dmg-upgrade",
-    name: "Damage Upgrade",
+    name: "Upgrade Damage",
     level: 1,
     cost: 650,
     costIncrement: 150,

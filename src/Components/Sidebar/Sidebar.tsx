@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./sidebar.module.css";
 import type { StoreDispatch, StoreState } from "../../Redux/Store";
 import type { Upgrade } from "../../Models/Upgrade";
-import { useState } from "react";
-import { Popup } from "../Small-Components/Popup";
+import { useState, type BaseSyntheticEvent } from "react";
+import { setActiveHover } from "../../Redux/Slices/UpgradeSliceUIExtensions";
 
 export const Sidebar = () => {
   const upgradeState = useSelector((state: StoreState) => state.upgrade);
+  const upgradeUIExtensionsState = useSelector(
+    (state: StoreState) => state.upgradeUIExtenstions,
+  );
   const dispatch = useDispatch<StoreDispatch>();
-  const [hover, setHover] = useState(false);
 
   return (
     <div className={style["sidebar-main"]}>
@@ -17,13 +19,21 @@ export const Sidebar = () => {
         {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
           (i) => (
             <button
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
+              onMouseEnter={(e: BaseSyntheticEvent) =>
+                dispatch(
+                  setActiveHover({ id: e.target.id, isHoveredOver: true }),
+                )
+              }
+              onMouseLeave={(e: BaseSyntheticEvent) =>
+                dispatch(
+                  setActiveHover({ id: e.target.id, isHoveredOver: false }),
+                )
+              }
               className={style["upgrade-button"]}
               key={i[0]}
             >
-              {hover ? <Popup item={i[1]} /> : ""}
               <img
+                id={i[1].id}
                 className={style["upgrade-picture"]}
                 src={i[1].backgroundPic}
               />

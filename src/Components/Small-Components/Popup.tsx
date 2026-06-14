@@ -4,22 +4,25 @@ import type { StoreState } from "../../Redux/Store";
 
 export const Popup = ({ item }: { item: Upgrade }) => {
   const crosshairState = useSelector((state: StoreState) => state.crosshair);
-
   return (
     <div
       style={{
-        left: crosshairState.x + 100,
-        top: crosshairState.y + 100,
-        zIndex: "100",
+        width: "10vh",
+        height: "fit-content",
+        position: "absolute",
+        left: crosshairState.x - 45,
+        top: crosshairState.y - 150,
+        background: "white",
+        zIndex: 3,
       }}
     >
-      <h5>{item.name}</h5>
-      <div>{item.description}</div>
+      <h5>{item?.name}</h5>
+      <div>{item?.description}</div>
       <div>
         <strong>Level </strong>
-        {item.level}
+        {item?.level}
       </div>
-      <div>{item.cost}</div>
+      <div>{item?.cost}</div>
     </div>
   );
 };
