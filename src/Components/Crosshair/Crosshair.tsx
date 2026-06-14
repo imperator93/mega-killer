@@ -7,7 +7,6 @@ import type { StoreState, StoreDispatch } from "../../Redux/Store";
 export const Crosshair = () => {
   const crosshairState = useSelector((state: StoreState) => state.crosshair);
   const dispatch = useDispatch<StoreDispatch>();
-
   useEffect(() => {
     const mouseListener = (e: MouseEvent) => {
       dispatch(setPosition({ x: e.x, y: e.y }));
@@ -15,7 +14,6 @@ export const Crosshair = () => {
     document.addEventListener("mousemove", mouseListener);
     return () => removeEventListener("mousemove", mouseListener);
   }, [dispatch]);
-
   return (
     <div
       style={{

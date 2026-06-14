@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-class Crosshair {
-  x: number = 0;
-  y: number = 0;
-}
+type Crosshair = {
+  x: number;
+  y: number;
+};
 
 const initialState: Crosshair = {
   x: 0,
@@ -14,8 +14,9 @@ const crosshairSlice = createSlice({
   name: "crosshair",
   initialState: initialState,
   reducers: {
-    setPosition: (_, action: PayloadAction<Crosshair>) => {
-      return action.payload;
+    setPosition: (state, action: PayloadAction<Crosshair>) => {
+      state.x = action.payload.x;
+      state.y = action.payload.y;
     },
   },
 });

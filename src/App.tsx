@@ -5,7 +5,7 @@ import { Sidebar } from "./Components/Sidebar/Sidebar";
 
 export const App = () => {
   return (
-    <div className={style["main"]}>
+    <div style={{ userSelect: "none" }} className={style["main"]}>
       <Crosshair />
       <div
         style={{
