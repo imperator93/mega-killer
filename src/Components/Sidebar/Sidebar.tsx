@@ -19,6 +19,7 @@ export const Sidebar = () => {
         {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
           (i) => (
             <button
+              id={i[1].id}
               onMouseEnter={(e: BaseSyntheticEvent) =>
                 dispatch(
                   setActiveHover({ id: e.target.id, isHoveredOver: true }),
