@@ -35,28 +35,29 @@ const upgradeSlice = createSlice({
   initialState: initialState,
   reducers: {
     startResearching: (state, action: PayloadAction<Upgrade["id"]>) => {
-      const as = state[action.payload];
+      const up = state[action.payload];
 
-      if (as == null || as.isResearching) return;
-      as.isResearching = true;
+      if (up == null || up.isResearching) return;
+      up.isResearching = true;
     },
     decrementTimer: (state, action: PayloadAction<Upgrade["id"]>) => {
-      const as = state[action.payload];
+      const up = state[action.payload];
 
-      if (as == null || as.isResearching || as.timeToComplete <= 0) return;
+      if (up == null || up.isResearching || up.timeToComplete <= 0) return;
 
-      as.timeToComplete -= 1000;
+      up.timeToComplete -= 1000;
     },
     upgradeFinished: (state, action: PayloadAction<Upgrade["id"]>) => {
-      const as = state[action.payload];
+      const up = state[action.payload];
 
-      if (as == null) return;
+      if (up == null) return;
 
-      as.cost += as.costIncrement;
-      as.researchLength += as.researchLengthIncrement;
-      as.timeToComplete = as.researchLength;
-      as.level += 1;
-      as.isResearching = false;
+      up.cost += up.costIncrement;
+      up.researchLength += up.researchLengthIncrement;
+      up.timeToComplete = up.researchLength;
+      up.level += 1;
+      up.isResearching = false;
+      console.log("test");
     },
   },
 });

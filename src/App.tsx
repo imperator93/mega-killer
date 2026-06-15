@@ -14,7 +14,10 @@ export const App = () => {
   return (
     <div style={{ userSelect: "none" }} className={style["main"]}>
       {upgradeUIExtensionsState.isHoveredOver ? (
-        <Popup item={upgradeState[upgradeUIExtensionsState.id]} />
+        <Popup
+          type="upgrade"
+          item={upgradeState[upgradeUIExtensionsState.id]}
+        />
       ) : null}
       <Crosshair />
       <div

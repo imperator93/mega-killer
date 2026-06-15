@@ -2,7 +2,13 @@ import type { Upgrade } from "../../Models/Upgrade";
 import { useSelector } from "react-redux";
 import type { StoreState } from "../../Redux/Store";
 
-export const Popup = ({ item }: { item: Upgrade }) => {
+export const Popup = ({
+  item,
+  type,
+}: {
+  item: Upgrade;
+  type: "upgrade" | "minion";
+}) => {
   const crosshairState = useSelector((state: StoreState) => state.crosshair);
   return (
     <div
@@ -16,13 +22,13 @@ export const Popup = ({ item }: { item: Upgrade }) => {
         zIndex: 3,
       }}
     >
-      <h5>{item?.name}</h5>
-      <div>{item?.description}</div>
+      <h5>{item.name}</h5>
+      <div>{item.description}</div>
       <div>
         <strong>Level </strong>
-        {item?.level}
+        {item.level}
       </div>
-      <div>{item?.cost}</div>
+      <div>{item.cost}</div>
     </div>
   );
 };

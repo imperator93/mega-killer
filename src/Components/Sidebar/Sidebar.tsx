@@ -1,16 +1,35 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import style from "./sidebar.module.css";
 import type { StoreDispatch, StoreState } from "../../Redux/Store";
 import type { Upgrade } from "../../Models/Upgrade";
-import { useState, type BaseSyntheticEvent } from "react";
+import { useEffect, useState, type BaseSyntheticEvent } from "react";
 import { setActiveHover } from "../../Redux/Slices/UpgradeSliceUIExtensions";
+import {
+  decrementTimer,
+  startResearching,
+  upgradeFinished,
+} from "../../Redux/Slices/UpgradeSlice";
 
 export const Sidebar = () => {
+  const [upId, setUpId] = useState<Upgrade["id"]>();
   const upgradeState = useSelector((state: StoreState) => state.upgrade);
-  const upgradeUIExtensionsState = useSelector(
-    (state: StoreState) => state.upgradeUIExtenstions,
-  );
   const dispatch = useDispatch<StoreDispatch>();
+
+  //upgrades handler NEED FIX HERE!!!
+  console.log(upgradeState[upId]);
+  useEffect(() => {
+    if (!upId) return;
+    if (!upgradeState[upId].isResearching) dispatch(startResearching(upId));
+    if (upgradeState[upId].timeToComplete == 0) {
+      dispatch(upgradeFinished(upId));
+      return;
+    }
+    const i = setInterval(() => {
+      dispatch(decrementTimer(upId));
+    }, 1000);
+
+    return () => clearInterval(i);
+  }, [dispatch, upId, upgradeState]);
 
   return (
     <div className={style["sidebar-main"]}>
@@ -19,7 +38,9 @@ export const Sidebar = () => {
         {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
           (i) => (
             <button
+              disabled={upgradeState[i[0]].isResearching}
               id={i[1].id}
+              onClick={(e: BaseSyntheticEvent) => setUpId(e.target.id)}
               onMouseEnter={(e: BaseSyntheticEvent) =>
                 dispatch(
                   setActiveHover({ id: e.target.id, isHoveredOver: true }),
@@ -34,6 +55,7 @@ export const Sidebar = () => {
               key={i[0]}
             >
               <img
+                style={{ opacity: upgradeState[i[0]].isResearching ? 10 : "" }}
                 id={i[1].id}
                 className={style["upgrade-picture"]}
                 src={i[1].backgroundPic}
