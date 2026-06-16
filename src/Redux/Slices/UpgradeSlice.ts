@@ -10,9 +10,9 @@ const initialState: Record<Upgrade["id"], Upgrade> = {
     costIncrement: 100,
     description: "Increases attack speed by 20%",
     isResearching: false,
-    researchLength: 10000,
+    researchLength: 5000,
     researchLengthIncrement: 4000,
-    timeToComplete: 10000,
+    timeToComplete: 5000,
     backgroundPic: "https://imgur.com/Zj8R9jU.png",
   },
   "dmg-upgrade": {
@@ -22,10 +22,10 @@ const initialState: Record<Upgrade["id"], Upgrade> = {
     cost: 650,
     costIncrement: 150,
     description: "Increases damage by 10%",
-    researchLength: 12000,
+    researchLength: 5000,
     researchLengthIncrement: 5000,
     isResearching: false,
-    timeToComplete: 12000,
+    timeToComplete: 5000,
     backgroundPic: "https://imgur.com/DmrUSJg.png",
   },
 };
@@ -42,22 +42,17 @@ const upgradeSlice = createSlice({
     },
     decrementTimer: (state, action: PayloadAction<Upgrade["id"]>) => {
       const up = state[action.payload];
-
-      if (up == null || up.isResearching || up.timeToComplete <= 0) return;
-
+      if (!up.isResearching) return;
       up.timeToComplete -= 1000;
     },
     upgradeFinished: (state, action: PayloadAction<Upgrade["id"]>) => {
       const up = state[action.payload];
-
-      if (up == null) return;
 
       up.cost += up.costIncrement;
       up.researchLength += up.researchLengthIncrement;
       up.timeToComplete = up.researchLength;
       up.level += 1;
       up.isResearching = false;
-      console.log("test");
     },
   },
 });

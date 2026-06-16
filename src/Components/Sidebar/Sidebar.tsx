@@ -1,35 +1,26 @@
-import { useDispatch, useSelector, useStore } from "react-redux";
-import style from "./sidebar.module.css";
+//react
+import { useState, type BaseSyntheticEvent } from "react";
+//redux
+import { useDispatch, useSelector } from "react-redux";
 import type { StoreDispatch, StoreState } from "../../Redux/Store";
+//models
 import type { Upgrade } from "../../Models/Upgrade";
-import { useEffect, useState, type BaseSyntheticEvent } from "react";
 import { setActiveHover } from "../../Redux/Slices/UpgradeSliceUIExtensions";
-import {
-  decrementTimer,
-  startResearching,
-  upgradeFinished,
-} from "../../Redux/Slices/UpgradeSlice";
+
+import { UpgradeStateHandler } from "../STATE_COMPONENTS_ONLY/UpgradeStateHandler";
+
+import style from "./sidebar.module.css";
 
 export const Sidebar = () => {
-  const [upId, setUpId] = useState<Upgrade["id"]>();
+  const [ids, setIds] = useState<Upgrade["id"][]>([]);
   const upgradeState = useSelector((state: StoreState) => state.upgrade);
   const dispatch = useDispatch<StoreDispatch>();
 
-  //upgrades handler NEED FIX HERE!!!
-  console.log(upgradeState[upId]);
-  useEffect(() => {
-    if (!upId) return;
-    if (!upgradeState[upId].isResearching) dispatch(startResearching(upId));
-    if (upgradeState[upId].timeToComplete == 0) {
-      dispatch(upgradeFinished(upId));
-      return;
-    }
-    const i = setInterval(() => {
-      dispatch(decrementTimer(upId));
-    }, 1000);
-
-    return () => clearInterval(i);
-  }, [dispatch, upId, upgradeState]);
+  const onUpgradeClickedHandler = (e: BaseSyntheticEvent) => {
+    const id = ids.find((id) => id == e.target.id);
+    if (id) return;
+    setIds((prev) => [...prev, e.target.id]);
+  };
 
   return (
     <div className={style["sidebar-main"]}>
@@ -40,25 +31,28 @@ export const Sidebar = () => {
             <button
               disabled={upgradeState[i[0]].isResearching}
               id={i[1].id}
-              onClick={(e: BaseSyntheticEvent) => setUpId(e.target.id)}
-              onMouseEnter={(e: BaseSyntheticEvent) =>
-                dispatch(
-                  setActiveHover({ id: e.target.id, isHoveredOver: true }),
-                )
-              }
-              onMouseLeave={(e: BaseSyntheticEvent) =>
-                dispatch(
-                  setActiveHover({ id: e.target.id, isHoveredOver: false }),
-                )
-              }
+              onClick={(e: BaseSyntheticEvent) => onUpgradeClickedHandler(e)}
               className={style["upgrade-button"]}
               key={i[0]}
             >
+              <div
+                style={{ userSelect: "none", width: "100%", height: "100%" }}
+              ></div>
               <img
-                style={{ opacity: upgradeState[i[0]].isResearching ? 10 : "" }}
+                onMouseEnter={(e: BaseSyntheticEvent) =>
+                  dispatch(
+                    setActiveHover({ id: e.target.id, isHoveredOver: true }),
+                  )
+                }
+                onMouseLeave={(e: BaseSyntheticEvent) =>
+                  dispatch(
+                    setActiveHover({ id: e.target.id, isHoveredOver: false }),
+                  )
+                }
                 id={i[1].id}
-                className={style["upgrade-picture"]}
                 src={i[1].backgroundPic}
+                className={style["upgrade-picture"]}
+                style={{ opacity: i[1].isResearching ? 0.5 : 1 }}
               />
             </button>
           ),
@@ -71,6 +65,14 @@ export const Sidebar = () => {
         inventore excepturi cum, assumenda dolores, necessitatibus accusantium
         consequuntur at?
       </div>
+
+      {/* these are just for asynchronous state setting with useEffect and
+      setTimeout */}
+      {ids.length
+        ? ids.map((id) => (
+            <UpgradeStateHandler key={id} ids={ids} setIds={setIds} />
+          ))
+        : ""}
     </div>
   );
 };
