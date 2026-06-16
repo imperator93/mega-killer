@@ -9,31 +9,37 @@ import {
 import type { StoreState } from "../../Redux/Store";
 
 export const UpgradeStateHandler = ({
-  ids,
+  id,
   setIds,
 }: {
-  ids: Upgrade["id"][];
+  id: Upgrade["id"];
   setIds: React.Dispatch<SetStateAction<Upgrade["id"][]>>;
 }) => {
-  const upgradeState = useSelector((state: StoreState) => state.upgrade);
+  const upgradeStateSingle = useSelector(
+    (state: StoreState) => state.upgrade[id],
+  );
   const dispatch = useDispatch();
-  //bug with level increment when fast clicking between the upgrades
-  useEffect(() => {
-    ids.map((id) => {
-      if (!upgradeState[id].isResearching) {
-        dispatch(startResearching(id));
-        return;
-      }
-      if (upgradeState[id].timeToComplete > 0) {
-        const i = setTimeout(() => {
-          dispatch(decrementTimer(id));
-        }, 1000);
-        return () => clearTimeout(i);
-      }
 
-      dispatch(upgradeFinished(id));
-      setIds((prev) => prev.filter((item) => item != id));
-    });
-  }, [ids, dispatch, upgradeState, setIds]);
+  useEffect(() => {
+    if (!upgradeStateSingle.isResearching) {
+      dispatch(startResearching(id));
+      return;
+    }
+    if (upgradeStateSingle.timeToComplete > 0) {
+      const i = setTimeout(() => {
+        dispatch(decrementTimer(id));
+      }, 1000);
+      return () => clearTimeout(i);
+    }
+
+    dispatch(upgradeFinished(id));
+    setIds((prev) => prev.filter((item) => item != id));
+  }, [
+    id,
+    dispatch,
+    upgradeStateSingle.isResearching,
+    upgradeStateSingle.timeToComplete,
+    setIds,
+  ]);
   return null;
 };

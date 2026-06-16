@@ -21,7 +21,7 @@ const initialState: Record<Upgrade["id"], Upgrade> = {
     level: 1,
     cost: 650,
     costIncrement: 150,
-    description: "Increases damage by 10%",
+    description: "Increases damage by 20%",
     researchLength: 5000,
     researchLengthIncrement: 5000,
     isResearching: false,

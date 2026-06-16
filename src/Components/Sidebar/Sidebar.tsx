@@ -2,11 +2,11 @@
 import { useState, type BaseSyntheticEvent } from "react";
 //redux
 import { useDispatch, useSelector } from "react-redux";
+import { setActiveHover } from "../../Redux/Slices/UpgradeSliceUIExtensions";
 import type { StoreDispatch, StoreState } from "../../Redux/Store";
 //models
 import type { Upgrade } from "../../Models/Upgrade";
-import { setActiveHover } from "../../Redux/Slices/UpgradeSliceUIExtensions";
-
+//components
 import { UpgradeStateHandler } from "../STATE_COMPONENTS_ONLY/UpgradeStateHandler";
 
 import style from "./sidebar.module.css";
@@ -35,6 +35,7 @@ export const Sidebar = () => {
               className={style["upgrade-button"]}
               key={i[0]}
             >
+              {/* need fix here for counter UI */}
               <div
                 style={{
                   userSelect: "none",
@@ -76,7 +77,11 @@ export const Sidebar = () => {
 
       {/* these are just for asynchronous state setting with useEffect and
       setTimeout */}
-      {ids.length ? <UpgradeStateHandler ids={ids} setIds={setIds} /> : ""}
+      {ids.length
+        ? ids.map((id) => (
+            <UpgradeStateHandler key={id} id={id} setIds={setIds} />
+          ))
+        : ""}
     </div>
   );
 };
