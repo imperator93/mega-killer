@@ -36,8 +36,16 @@ export const Sidebar = () => {
               key={i[0]}
             >
               <div
-                style={{ userSelect: "none", width: "100%", height: "100%" }}
-              ></div>
+                style={{
+                  userSelect: "none",
+                  width: "100%",
+                  height: "100%",
+                  msUserSelect: "none",
+                  position: "relative",
+                }}
+              >
+                {i[1].timeToComplete / 1000}
+              </div>
               <img
                 onMouseEnter={(e: BaseSyntheticEvent) =>
                   dispatch(
@@ -68,11 +76,7 @@ export const Sidebar = () => {
 
       {/* these are just for asynchronous state setting with useEffect and
       setTimeout */}
-      {ids.length
-        ? ids.map((id) => (
-            <UpgradeStateHandler key={id} ids={ids} setIds={setIds} />
-          ))
-        : ""}
+      {ids.length ? <UpgradeStateHandler ids={ids} setIds={setIds} /> : ""}
     </div>
   );
 };
