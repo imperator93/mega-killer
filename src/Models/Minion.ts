@@ -1,13 +1,22 @@
-type MinionLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+type MinionLevel = 1 | 2;
 export type Minion = {
-  id: `minion_lvl_${MinionLevel}`;
+  id: number | null;
+  type: `minion_lvl_${MinionLevel}`;
   name: string;
   description: string;
   damage: number;
+  currentHealth: number;
+  baseHealth: number;
   cost: number;
   quantity: number;
   cooldown: number;
+  cooldownRemaining: number;
   reward: number;
   income: number;
+  size: number;
+  background_active_pic: string;
   background_pic_anim_1: string;
+  background_pic_anim_2: string;
+  background_pic_anim_attacked: string;
+  background_pic_anim_half_health: string;
 };

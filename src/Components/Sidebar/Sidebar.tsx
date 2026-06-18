@@ -10,10 +10,12 @@ import type { Upgrade } from "../../Models/Upgrade";
 import { UpgradeStateHandler } from "../STATE_COMPONENTS_ONLY/UpgradeStateHandler";
 
 import style from "./sidebar.module.css";
+import { MinionShopComponent } from "../MinionShopComponent/MinionShopComponent";
 
 export const Sidebar = () => {
   const [ids, setIds] = useState<Upgrade["id"][]>([]);
   const upgradeState = useSelector((state: StoreState) => state.upgrade);
+  const minionState = useSelector((state: StoreState) => state.minion);
   const dispatch = useDispatch<StoreDispatch>();
 
   const onUpgradeClickedHandler = (e: BaseSyntheticEvent) => {
@@ -68,11 +70,10 @@ export const Sidebar = () => {
         )}
       </div>
       <h1>Send minions</h1>
-      <div>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. A, autem non
-        quae ab magnam vel dignissimos sapiente atque perferendis fugiat cumque
-        inventore excepturi cum, assumenda dolores, necessitatibus accusantium
-        consequuntur at?
+      <div className={style["minion-shop-main"]}>
+        {Object.entries(minionState).map(([k, v]) => {
+          return <MinionShopComponent key={k} minion={v} />;
+        })}
       </div>
 
       {/* these are just for asynchronous state setting with useEffect and
