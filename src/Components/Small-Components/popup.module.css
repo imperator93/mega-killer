@@ -1,0 +1,7 @@
+.main {
+    width: 10vh;
+    height: fit-content;
+    position: absolute;
+    background: white;
+    z-index: 3,
+}

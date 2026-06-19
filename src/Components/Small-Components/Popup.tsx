@@ -2,6 +2,7 @@ import type { Upgrade } from "../../Models/Upgrade";
 import { useSelector } from "react-redux";
 import type { StoreState } from "../../Redux/Store";
 import type { Minion } from "../../Models/Minion";
+import style from "./popup.module.css";
 
 export const Popup = ({
   item,
@@ -13,14 +14,10 @@ export const Popup = ({
   const crosshairState = useSelector((state: StoreState) => state.crosshair);
   return (
     <div
+      className={style["main"]}
       style={{
-        width: "10vh",
-        height: "fit-content",
-        position: "absolute",
         left: crosshairState.x - 45,
         top: crosshairState.y - 150,
-        background: "white",
-        zIndex: 3,
       }}
     >
       {type == "upgrade" ? (
