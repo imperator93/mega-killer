@@ -27,44 +27,39 @@ export const Sidebar = () => {
   return (
     <div className={style["sidebar-main"]}>
       <h1>Upgrade</h1>
-      <div className={style["upgrade-wrapper"]}>
+      <div className={style["upgrade-main"]}>
         {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
           (i) => (
             <button
-              disabled={upgradeState[i[0]].isResearching}
-              id={i[1].id}
-              onClick={(e: BaseSyntheticEvent) => onUpgradeClickedHandler(e)}
               className={style["upgrade-button"]}
+              id={i[1].id}
               key={i[0]}
+              disabled={upgradeState[i[0]].isResearching}
+              onClick={(e: BaseSyntheticEvent) => onUpgradeClickedHandler(e)}
             >
               {/* need fix here for counter UI */}
-              <div
-                style={{
-                  userSelect: "none",
-                  width: "100%",
-                  height: "100%",
-                  msUserSelect: "none",
-                  position: "relative",
-                }}
-              >
-                {i[1].timeToComplete / 1000}
+              <div className={style["upgrade-wrapper"]}>
+                <div className={style["counter-wrapper"]}>
+                  {i[1].isResearching ? i[1].timeToComplete / 1000 : null}
+                </div>
+
+                <img
+                  onMouseEnter={(e: BaseSyntheticEvent) =>
+                    dispatch(
+                      setActiveHover({ id: e.target.id, isHoveredOver: true }),
+                    )
+                  }
+                  onMouseLeave={(e: BaseSyntheticEvent) =>
+                    dispatch(
+                      setActiveHover({ id: e.target.id, isHoveredOver: false }),
+                    )
+                  }
+                  id={i[1].id}
+                  src={i[1].backgroundPic}
+                  className={style["upgrade-picture"]}
+                  style={{ opacity: i[1].isResearching ? 0.5 : 1 }}
+                />
               </div>
-              <img
-                onMouseEnter={(e: BaseSyntheticEvent) =>
-                  dispatch(
-                    setActiveHover({ id: e.target.id, isHoveredOver: true }),
-                  )
-                }
-                onMouseLeave={(e: BaseSyntheticEvent) =>
-                  dispatch(
-                    setActiveHover({ id: e.target.id, isHoveredOver: false }),
-                  )
-                }
-                id={i[1].id}
-                src={i[1].backgroundPic}
-                className={style["upgrade-picture"]}
-                style={{ opacity: i[1].isResearching ? 0.5 : 1 }}
-              />
             </button>
           ),
         )}
