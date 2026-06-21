@@ -20,19 +20,13 @@ export const Popup = ({
         top: crosshairState.y - 150,
       }}
     >
-      {type == "upgrade" ? (
-        <>
-          <h5>{item.name}</h5>
-          <div>{item.description}</div>
-          <div>
-            <strong>Level </strong>
-            {item.level}
-          </div>
-          <div>{item.cost}</div>
-        </>
-      ) : (
-        ""
-      )}
+      <h5>{item.name}</h5>
+      <div>{item.description}</div>
+      <div>
+        <strong>Level </strong>
+        {item.level}
+      </div>
+      <div>{item.cost}</div>
     </div>
   );
 };
