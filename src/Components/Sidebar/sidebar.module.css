@@ -1,44 +1,28 @@
 .sidebar-main {
     width: 20%;
     height: 100%;
-    position: relative;
     background-color: red;
     overflow: hidden;
     cursor: pointer;
-    z-index: 2;
+    z-index: 1;
+}
+
+.sidebar-main > * {
+    cursor: pointer;
 }
 
 .upgrade-main{
     width: 100%;
     height: 20%;
-    display: flex;
-}
-
-.upgrade-button {
-    border: none;
-    width: fit-content;
+    flex-direction: column;
 }
 
 .upgrade-wrapper {
-    position: relative;
-    height: 100%;
-    user-select: none;
-    background: white;
+    display: flex;
+    height: 50%;
+    padding: 0.5em;
 }
 
-.upgrade-picture {
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-}
-
-.counter-wrapper {
-    margin-top: 0.1em;
-    position:absolute;
-    font-size: 6cqw;
-    width: 100%;
-
-}
 .minion-shop-main{
    height: 100%;
 }

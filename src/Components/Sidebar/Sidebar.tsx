@@ -26,22 +26,27 @@ export const Sidebar = () => {
 
   return (
     <div className={style["sidebar-main"]}>
-      <h1>Upgrade</h1>
       <div className={style["upgrade-main"]}>
-        {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
-          (upgrade) => (
-            <UpgradeComponent
-              upgrade={upgrade}
-              onUpgradeClickedHandler={onUpgradeClickedHandler}
-            />
-          ),
-        )}
+        <h1>Upgrade</h1>
+        <div className={style["upgrade-wrapper"]}>
+          {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
+            (upgrade) => (
+              <UpgradeComponent
+                key={upgrade[0]}
+                upgrade={upgrade}
+                onUpgradeClickedHandler={onUpgradeClickedHandler}
+              />
+            ),
+          )}
+        </div>
       </div>
-      <h1>Send minions</h1>
-      <div className={style["minion-shop-main"]}>
-        {Object.entries(minionState).map(([k, v]) => {
-          return <MinionShopComponent key={k} minion={v} />;
-        })}
+      <div>
+        <h1>Send minions</h1>
+        <div className={style["minion-shop-main"]}>
+          {Object.entries(minionState).map(([k, v]) => {
+            return <MinionShopComponent key={k} minion={v} />;
+          })}
+        </div>
       </div>
 
       {/* these are just for asynchronous state setting with useEffect and
