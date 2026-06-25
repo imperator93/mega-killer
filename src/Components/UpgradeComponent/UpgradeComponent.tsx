@@ -13,7 +13,19 @@ export const UpgradeComponent = ({
 }) => {
   const dispatch = useDispatch<StoreDispatch>();
 
-  return <button className={style["button"]}>tst</button>;
+  return (
+    <button
+      className={style["button"]}
+      id={upgrade[0]}
+      onMouseEnter={(e: BaseSyntheticEvent) =>
+        dispatch(setActiveHover({ id: e.target.id, isHoveredOver: true }))
+      }
+      onMouseLeave={(e: BaseSyntheticEvent) =>
+        dispatch(setActiveHover({ id: e.target.id, isHoveredOver: false }))
+      }
+      style={{ backgroundImage: `URL(${upgrade[1].backgroundPic})` }}
+    ></button>
+  );
 };
 
 // onMouseEnter={(e: BaseSyntheticEvent) =>

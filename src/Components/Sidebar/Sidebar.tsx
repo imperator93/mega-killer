@@ -27,7 +27,7 @@ export const Sidebar = () => {
   return (
     <div className={style["sidebar-main"]}>
       <div className={style["upgrade-main"]}>
-        <h1>Upgrade</h1>
+        <h1 style={{ height: "20%" }}>Upgrade</h1>
         <div className={style["upgrade-wrapper"]}>
           {(Object.entries(upgradeState) as [Upgrade["id"], Upgrade][]).map(
             (upgrade) => (
@@ -40,15 +40,14 @@ export const Sidebar = () => {
           )}
         </div>
       </div>
-      <div>
+      <div className={style["minion-shop-main"]}>
         <h1>Send minions</h1>
-        <div className={style["minion-shop-main"]}>
+        <div>
           {Object.entries(minionState).map(([k, v]) => {
             return <MinionShopComponent key={k} minion={v} />;
           })}
         </div>
       </div>
-
       {/* these are just for asynchronous state setting with useEffect and
       setTimeout */}
       {ids.length
